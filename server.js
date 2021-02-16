@@ -27,7 +27,9 @@ app.get("/api/hello", function (req, res) {
 
 app.get("/api/timestamp/:someVal", function (req,res){
   let val=req.params.someVal;
-  res.json({msg: val})
+  // res.json({unix: Number(val), utc:'ssdfaomane utc val'})
+  let IsNanVal=isNaN(val)
+  res.json({IsNanVal})
 })
 // listen for requests :)
 const PORT = process.env.PORT || 5000;
