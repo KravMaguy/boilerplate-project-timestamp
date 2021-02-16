@@ -23,8 +23,16 @@ app.get("/api/hello", function (req, res) {
   res.json({ greeting: "hello API" });
 });
 
-app.get("/api/timestamp/:someVal", function (req, res) {
+app.get("/api/timestamp/:someVal?", function (req, res) {
   let val = req.params.someVal;
+  if(!val){
+    let unix=new Date().getTime()
+    let utc=new Date().toUTCString()
+    return res.json({ unix, utc });
+  }
+  if (!(/\d{4,}/.test(val))) {
+    return res.json({error:"Invalid Date"})
+  }
   let IsNanVal = isNaN(val);
   const isValidDate = (param, paramVal) => {
     if (param) {
