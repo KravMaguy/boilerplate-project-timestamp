@@ -32,12 +32,15 @@ app.get("/api/timestamp/:someVal", function (req, res) {
     }
     return Number(paramVal);
   };
-  const validateUtc = (paramVal) => {
-    return new Date(paramVal).toUTCString();
+  const validateUtc = (param, paramVal) => {
+    if (param) {
+      return new Date(paramVal).toUTCString();
+    }
+    return new Date(Number(paramVal)).toUTCString();
   };
   let unix = isValidDate(IsNanVal, val);
-  let utc=validateUtc(val)
-  res.json({ unix, utc })
+  let utc = validateUtc(IsNanVal, val);
+  res.json({ unix, utc: utc });
 });
 // listen for requests :)
 const PORT = process.env.PORT || 5000;
